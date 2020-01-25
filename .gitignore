@@ -12,3 +12,8 @@
 ###> JetBrains ###
 .idea/
 ###< JetBrains ###
+
+###> environment ###
+docker/.database/
+!docker/.database/.gitkeep
+###< environment ###

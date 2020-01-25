@@ -2,7 +2,7 @@ version: '3'
 
 services:
   db:
-    image: mysql:5.6
+    image: mysql:5.7
     volumes:
       - ./docker/.database:/var/lib/mysql
     restart: always
@@ -10,7 +10,7 @@ services:
       - 3307:3306
     env_file: ./.env.local
   fpm:
-    image: devilbox/php-fpm:8.0-prod
+    image: devilbox/php-fpm:7.2-prod
     volumes:
       - ./:/app
     restart: always
@@ -26,7 +26,7 @@ services:
       - fpm
       - db
   composer:
-    image: composer:1.9
+    image: composer:1.6
     volumes:
       - ./:/app
     restart: 'no'

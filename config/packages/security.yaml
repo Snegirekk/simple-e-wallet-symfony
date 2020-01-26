@@ -4,14 +4,18 @@ security:
             algorithm: argon2i
 
     providers:
-        in_memory: { memory: null }
+        users:
+            entity:
+                class: App\Entity\User
+                property: username
 
     firewalls:
         dev:
             pattern: ^/(_(profiler|wdt)|css|images|js)/
             security: false
         main:
-            anonymous: lazy
+            anonymous: false
+            http_basic: ~
 
             # activate different ways to authenticate
             # https://symfony.com/doc/current/security.html#firewalls-authentication

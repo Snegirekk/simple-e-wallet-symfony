@@ -1,0 +1,3 @@
+auto_mapper_plus:
+  options:
+    create_unregistered_mappings: true

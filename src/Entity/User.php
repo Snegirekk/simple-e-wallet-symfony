@@ -46,7 +46,7 @@ class User implements UserInterface
     /**
      * @var Wallet|null
      *
-     * @ORM\OneToOne(targetEntity="App\Entity\Wallet", cascade={"all"}, orphanRemoval=true)
+     * @ORM\OneToOne(targetEntity="App\Entity\Wallet", inversedBy="owner", cascade={"all"}, orphanRemoval=true)
      * @ORM\JoinColumn(onDelete="cascade")
      */
     private $wallet;

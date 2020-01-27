@@ -6,7 +6,7 @@ use DateTime;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
- * @ORM\Entity()
+ * @ORM\Entity(repositoryClass="App\Repository\TransactionRepository")
  * @ORM\Table(name="transactions")
  */
 class Transaction
@@ -31,6 +31,7 @@ class Transaction
      * @var TransferParticipant
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\TransferParticipant")
+     * @ORM\JoinColumn(name="source_transfer_participant_id")
      */
     private $source;
 
@@ -38,6 +39,7 @@ class Transaction
      * @var TransferParticipant
      *
      * @ORM\ManyToOne(targetEntity="App\Entity\TransferParticipant")
+     * @ORM\JoinColumn(name="target_transfer_participant_id")
      */
     private $target;
 

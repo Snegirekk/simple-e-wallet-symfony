@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity()
@@ -33,6 +34,13 @@ class Wallet
      * @ORM\JoinColumn(onDelete="cascade")
      */
     private $transferParticipant;
+
+    /**
+     * @var UserInterface
+     *
+     * @ORM\OneToOne(targetEntity="App\Entity\User", mappedBy="wallet")
+     */
+    private $owner;
 
     /**
      * Wallet constructor.
@@ -76,5 +84,23 @@ class Wallet
     public function getTransferParticipant(): WalletTransferParticipant
     {
         return $this->transferParticipant;
+    }
+
+    /**
+     * @return UserInterface
+     */
+    public function getOwner(): UserInterface
+    {
+        return $this->owner;
+    }
+
+    /**
+     * @param UserInterface $owner
+     * @return Wallet
+     */
+    public function setOwner(UserInterface $owner): Wallet
+    {
+        $this->owner = $owner;
+        return $this;
     }
 }

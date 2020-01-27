@@ -20,6 +20,14 @@ class WalletTransferParticipant extends TransferParticipant
     /**
      * @inheritDoc
      */
+    public function getParticipantName(): string
+    {
+        return $this->wallet->getOwner()->getUsername();
+    }
+
+    /**
+     * @inheritDoc
+     */
     public function getTransferDescription(): string
     {
         return 'Internal points transfer.';

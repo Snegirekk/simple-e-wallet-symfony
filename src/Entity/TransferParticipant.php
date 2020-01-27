@@ -35,5 +35,10 @@ abstract class TransferParticipant
     /**
      * @return string
      */
+    abstract public function getParticipantName(): string;
+
+    /**
+     * @return string
+     */
     abstract public function getTransferDescription(): string;
 }

@@ -58,11 +58,13 @@ class ExceptionListener
         $extraHeaders = [];
 
         $errorDto = new BaseDto();
-        $errorDto->setResource(new stdClass());
 
         if ($exception instanceof ApiExceptionInterface) {
             $statusCode = $exception->getResponseStatusCode();
-            $errorDto   = $exception;
+
+            foreach ($exception->getMessages() as $message => $context) {
+                $errorDto->addMessage($message, $context);
+            }
 
             $this->logger->error(sprintf('API Error: "%s"', $exception->getMessage()), iterator_to_array($errorDto->getMessages()));
         } elseif ($exception instanceof HttpExceptionInterface) {

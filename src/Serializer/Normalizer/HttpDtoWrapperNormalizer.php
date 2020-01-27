@@ -4,43 +4,25 @@ namespace App\Serializer\Normalizer;
 
 use App\Dto\HttpDtoWrapperInterface;
 use ArrayObject;
-use Symfony\Component\Serializer\Exception\ExceptionInterface;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
+use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
-class HttpDtoWrapperNormalizer implements NormalizerInterface
+class HttpDtoWrapperNormalizer extends ObjectNormalizer
 {
-    /**
-     * @var DtoNormalizer
-     */
-    private $dtoNormalizer;
-
-    /**
-     * HttpDtoWrapperNormalizer constructor.
-     *
-     * @param DtoNormalizer $dtoNormalizer
-     */
-    public function __construct(DtoNormalizer $dtoNormalizer)
-    {
-        $this->dtoNormalizer = $dtoNormalizer;
-    }
-
     /**
      * @param HttpDtoWrapperInterface $object
      * @param string|null             $format
      * @param array                   $context
      *
      * @return array|ArrayObject|bool|float|int|mixed|string|null
-     *
-     * @throws ExceptionInterface
      */
     public function normalize($object, string $format = null, array $context = [])
     {
         $messages = [];
 
-        foreach ($object->getMessages() as $message => $context) {
+        foreach ($object->getMessages() as $message => $messageContext) {
             $messages[] = [
                 'message' => $message,
-                'context' => $context,
+                'context' => $messageContext,
             ];
         }
 
@@ -48,7 +30,7 @@ class HttpDtoWrapperNormalizer implements NormalizerInterface
             'status'      => $object->getStatus(),
             'status_code' => $object->getStatusCode(),
             'messages'    => $messages,
-            'result'      => $this->dtoNormalizer->normalize($object->getData()),
+            'result'      => $this->serializer->normalize($object->getData(), $format, $context),
         ];
     }
 

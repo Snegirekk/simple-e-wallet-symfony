@@ -6,26 +6,10 @@ use App\Dto\DtoCollectionInterface;
 use App\Dto\DtoInterface;
 use App\Dto\PaginationDtoCollectionDecorator;
 use stdClass;
-use Symfony\Component\Serializer\Normalizer\NormalizerInterface;
 use Symfony\Component\Serializer\Normalizer\ObjectNormalizer;
 
-class DtoNormalizer implements NormalizerInterface
+class DtoNormalizer extends ObjectNormalizer
 {
-    /**
-     * @var ObjectNormalizer
-     */
-    private $normalizer;
-
-    /**
-     * HttpDtoWrapperNormalizer constructor.
-     *
-     * @param ObjectNormalizer $normalizer
-     */
-    public function __construct(ObjectNormalizer $normalizer)
-    {
-        $this->normalizer = $normalizer;
-    }
-
     /**
      * @inheritDoc
      *
@@ -41,15 +25,16 @@ class DtoNormalizer implements NormalizerInterface
                     'page'           => $object->getPage(),
                     'items_per_page' => $object->getItemsPerPage(),
                     'total_pages'    => $object->getTotalPages(),
+                    'total_results'  => $object->getTotalResults(),
                 ];
             }
 
             foreach ($object as $item) {
-                $result['items'][] = $this->normalizer->normalize($item);
+                $result['items'][] = $this->serializer->normalize($item);
             }
         } else {
             $resource = $object->getResource();
-            $result   = $resource instanceof stdClass ? $resource : $this->normalizer->normalize($object->getResource());
+            $result   = $resource instanceof stdClass ? $resource : $this->serializer->normalize($resource, $format, $context);
         }
 
         return $result;

@@ -24,6 +24,11 @@ class PaginationDtoCollectionDecorator implements DtoCollectionInterface
     /**
      * @var int
      */
+    private $totalResults;
+
+    /**
+     * @var int
+     */
     private $totalPages;
 
     /**
@@ -32,14 +37,15 @@ class PaginationDtoCollectionDecorator implements DtoCollectionInterface
      * @param DtoCollectionInterface $collection
      * @param int                    $page
      * @param int                    $itemsPerPage
-     * @param int                    $totalPages
+     * @param int                    $totalResults
      */
-    public function __construct(DtoCollectionInterface $collection, int $page, int $itemsPerPage, int $totalPages)
+    public function __construct(DtoCollectionInterface $collection, int $page, int $itemsPerPage, int $totalResults)
     {
         $this->collection   = $collection;
         $this->page         = $page;
         $this->itemsPerPage = $itemsPerPage;
-        $this->totalPages   = $totalPages;
+        $this->totalResults = $totalResults;
+        $this->totalPages   = ceil($totalResults / $itemsPerPage);
     }
 
     /**
@@ -56,6 +62,14 @@ class PaginationDtoCollectionDecorator implements DtoCollectionInterface
     public function getItemsPerPage(): int
     {
         return $this->itemsPerPage;
+    }
+
+    /**
+     * @return int
+     */
+    public function getTotalResults(): int
+    {
+        return $this->totalResults;
     }
 
     /**

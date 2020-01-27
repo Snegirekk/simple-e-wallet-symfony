@@ -1,0 +1,4 @@
+App\CommandBus\Command\TransferPointsBetweenUsersCommand:
+  properties:
+    transferResource:
+      - Valid: ~

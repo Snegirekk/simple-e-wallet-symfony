@@ -2,6 +2,8 @@
 
 namespace App\Dto;
 
+use stdClass;
+
 class BaseDto implements DtoInterface
 {
     use MessagesAwareTrait;
@@ -13,9 +15,11 @@ class BaseDto implements DtoInterface
 
     /**
      * BaseDto constructor.
+     * @param object|null $resource
      */
-    public function __construct()
+    public function __construct(?object $resource = null)
     {
+        $this->resource   = $resource ?? new stdClass();
         $this->messageBag = new MessageBag();
     }
 

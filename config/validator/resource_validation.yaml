@@ -1,0 +1,9 @@
+App\Dto\Transaction\InternalTransferResource:
+  properties:
+    targetUserId:
+      - NotBlank: ~
+      - Uuid: ~
+    amount:
+      - NotBlank: ~
+      - Type: integer
+      - PositiveOrZero: ~

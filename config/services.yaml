@@ -21,6 +21,8 @@ services:
 
     App\Serializer\Normalizer\:
         resource: '%kernel.project_dir%/src/Serializer/Normalizer'
+        arguments:
+            $nameConverter: '@serializer.name_converter.camel_case_to_snake_case'
         tags: [serializer.normalizer]
 
     _instanceof:

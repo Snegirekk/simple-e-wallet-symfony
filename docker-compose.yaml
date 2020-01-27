@@ -2,6 +2,7 @@ version: '3'
 
 services:
   db:
+    container_name: db
     image: mysql:5.7
     volumes:
       - ./docker/.database:/var/lib/mysql
@@ -10,11 +11,13 @@ services:
       - 3307:3306
     env_file: ./.env.local
   fpm:
+    container_name: fpm
     image: devilbox/php-fpm:7.2-prod
     volumes:
       - ./:/app
     restart: always
   nginx:
+    container_name: nginx
     image: nginx:1.16-alpine
     volumes:
       - ./:/app
@@ -26,6 +29,7 @@ services:
       - fpm
       - db
   composer:
+    container_name: composer
     image: composer:1.6
     volumes:
       - ./:/app
